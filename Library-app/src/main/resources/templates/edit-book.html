@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+    <link rel="stylesheet" th:href="@{/css/edit-book.css}">
+</head>
+<body>
+<h1>Edit Book</h1>
+<div class="form-container">
+    <form th:action="@{/edit-book/{id}(id=${book.id})}" th:object="${book}" method="post">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" th:field="*{title}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" th:field="*{genre}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="language">Language:</label>
+            <input type="text" id="language" th:field="*{language}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="author_id">Author:</label>
+            <select id="author_id" th:field="*{author}" required>
+                <option value="" disabled>Select an Author</option>
+                <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <input type="number" id="year" th:field="*{year}" required />
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="submit-btn">Save Changes</button>
+            <a id="cancel-btn" href="/books" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+<footer>
+    <nav class="links">
+        <a href="/books" class="link">Back to Books List</a>
+        <a href="/authors" class="link">Authors</a>
+        <a href="../main" class="link">Home</a>
+    </nav>
+</footer>
+</html>

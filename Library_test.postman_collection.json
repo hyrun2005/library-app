@@ -1,0 +1,964 @@
+{
+	"info": {
+		"_postman_id": "45f55ed7-edaa-4235-8752-33f2731ee30d",
+		"name": "Library_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40308194"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is 'text/html'\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body contains the required HTML elements\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('<head>');\r",
+							"    pm.expect(responseData).to.include('<title>');\r",
+							"    pm.expect(responseData).to.include('<link');\r",
+							"    pm.expect(responseData).to.include('<body>');\r",
+							"    pm.expect(responseData).to.include('<h1>');\r",
+							"    pm.expect(responseData).to.include('<div');\r",
+							"    pm.expect(responseData).to.include('<footer>');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - author-name and author-lastname\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('author-name');\r",
+							"    pm.expect(responseData).to.include('author-lastname');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check correctness of author name\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('William');\r",
+							"    pm.expect(responseData).to.include('Charles');\r",
+							"    pm.expect(responseData).to.include('Dante');\r",
+							"    pm.expect(responseData).to.include('Jules');\r",
+							"    pm.expect(responseData).to.include('Verne'); // Updated to include 'Verne'\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/authors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add-author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test to check the status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test to check the response time\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// Test to check if the response body contains the title 'Authors List'\r",
+							"pm.test(\"Response body contains the title 'Authors List'\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Authors List\");\r",
+							"});\r",
+							"\r",
+							"// Test to check if the response body contains the author details for William Shakespeare\r",
+							"pm.test(\"Response body contains author details for William Shakespeare\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"William\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"Shakespeare\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Sancho",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "Pansa",
+							"type": "text"
+						},
+						{
+							"key": "date_of_birth",
+							"value": "1489.03.03",
+							"type": "text"
+						},
+						{
+							"key": "nationality",
+							"value": "Hispanic",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/add-author",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"add-author"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of each book item\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include(\"book-item\");\r",
+							"    pm.expect(responseData).to.include(\"book-title\");\r",
+							"    pm.expect(responseData).to.include(\"book-author\");\r",
+							"    pm.expect(responseData).to.include(\"action-link\");\r",
+							"});\r",
+							"pm.globals.unset(\"variable_key\");\r",
+							"pm.test(\"Check if the response contains the book title 'Twenty Thousand Leagues Under the Sea'\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Twenty Thousand Leagues Under the Sea\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add-book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type is 'text/html'\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Presence of HTML elements\", function () {\r",
+							"    const htmlContent = pm.response.text();\r",
+							"\r",
+							"    pm.expect(htmlContent).to.include('<input type=\"text\" id=\"title\"');\r",
+							"    pm.expect(htmlContent).to.include('<input type=\"text\" id=\"genre\"');\r",
+							"    pm.expect(htmlContent).to.include('<input type=\"text\" id=\"language\"');\r",
+							"    pm.expect(htmlContent).to.include('<select id=\"author_id\"');\r",
+							"    pm.expect(htmlContent).to.include('<input type=\"number\" id=\"year\"');\r",
+							"    pm.expect(htmlContent).to.include('<button type=\"submit\" class=\"submit-btn\">Add Book</button>');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Footer links are present\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('href=\"/books\"');\r",
+							"    pm.expect(responseData).to.include('href=\"/authors\"');\r",
+							"    pm.expect(responseData).to.include('href=\"../main\"');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "The Children of Captain Grant",
+							"type": "text"
+						},
+						{
+							"key": "genre",
+							"value": "Adventure novel",
+							"type": "text"
+						},
+						{
+							"key": "language",
+							"value": "French",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1867",
+							"type": "text"
+						},
+						{
+							"key": "author.id",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/add-book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"add-book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book-info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - Title, Genre, Year, Languages, and Author\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include('Title:');\r",
+							"    pm.expect(responseData).to.include('Genre:');\r",
+							"    pm.expect(responseData).to.include('Year:');\r",
+							"    pm.expect(responseData).to.include('Languages:');\r",
+							"    pm.expect(responseData).to.include('Author:');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Title, Genre, Year, Languages, and Author are non-empty strings\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include(\"<strong>Title:</strong>\").and.to.include(\"<strong>Genre:</strong>\").and.to.include(\"<strong>Year:</strong>\").and.to.include(\"<strong>Languages:</strong>\").and.to.include(\"<strong>Author:</strong>\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/book-info/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book-info",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book-Info_full",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is 'text/html'\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('text/html');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the presence of book details\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('Title:');\r",
+							"    pm.expect(responseData).to.include('Genre:');\r",
+							"    pm.expect(responseData).to.include('Year:');\r",
+							"    pm.expect(responseData).to.include('Languages:');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Presence of author details\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include(\"Name:\");\r",
+							"    pm.expect(responseData).to.include(\"LastName:\");\r",
+							"    pm.expect(responseData).to.include(\"Date of Birth:\");\r",
+							"    pm.expect(responseData).to.include(\"Nationality:\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/full_info_book/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"full_info_book",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Author-information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Updated response time test to 300ms\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"// Validate the HTML content structure\r",
+							"pm.test(\"Validate the HTML content structure\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include('<div class=\"author-info\">');\r",
+							"    pm.expect(responseData).to.include('<h2>Author Details</h2>');\r",
+							"    pm.expect(responseData).to.include('<p>First Name: <span>Jules</span></p>');\r",
+							"    pm.expect(responseData).to.include('<p>Last Name: <span>Verne</span></p>');\r",
+							"    pm.expect(responseData).to.include('<p>Date of Birth: <span>1828-02-08</span></p>');\r",
+							"    pm.expect(responseData).to.include('<p>Nationality: <span>Frenchman</span></p>');\r",
+							"    pm.expect(responseData).to.include('<footer>');\r",
+							"    pm.expect(responseData).to.include('<nav class=\"links\">');\r",
+							"});\r",
+							"\r",
+							"// Ensure the presence of author information fields\r",
+							"pm.test(\"Ensure the presence of author information fields\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include(\"First Name: <span>Jules</span>\");\r",
+							"    pm.expect(responseData).to.include(\"Last Name: <span>Verne</span>\");\r",
+							"    pm.expect(responseData).to.include(\"Date of Birth: <span>1828-02-08</span>\");\r",
+							"    pm.expect(responseData).to.include(\"Nationality: <span>Frenchman</span>\");\r",
+							"});\r",
+							"\r",
+							"// Verify the presence of navigation links\r",
+							"pm.test(\"Verify the presence of navigation links\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('Back to Authors List');\r",
+							"    pm.expect(responseData).to.include('Back to Books List');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/author-info/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"author-info",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Written books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('Name:');\r",
+							"    pm.expect(responseData).to.include('LastName:');\r",
+							"    pm.expect(responseData).to.include('Date of Birth:');\r",
+							"    pm.expect(responseData).to.include('Nationality:');\r",
+							"    pm.expect(responseData).to.include('Book Title');\r",
+							"    pm.expect(responseData).to.include('Genre');\r",
+							"    pm.expect(responseData).to.include('Year');\r",
+							"    pm.expect(responseData).to.include('Languages');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Date of Birth is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    const dateOfBirthRegex = /\\d{4}-\\d{2}-\\d{2}/;\r",
+							"    \r",
+							"    pm.expect(dateOfBirthRegex.test(responseData)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Books table contains the expected number of book entries\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    const booksTable = responseData.match(/<td>(.*?)<\\/td>/g);\r",
+							"    const expectedNumberOfBooks = 12; // 3 books * 4 fields\r",
+							"\r",
+							"    pm.expect(booksTable).to.have.lengthOf(expectedNumberOfBooks);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each book entry has the required fields\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    const booksTable = responseData.match(/<td>(.*?)<\\/td>/g);\r",
+							"\r",
+							"    booksTable.forEach(function (book, index) {\r",
+							"        if (index % 4 === 0) { // Check for each book title\r",
+							"            pm.expect(book).to.include(\"td>\"); // Check for the presence of the book title\r",
+							"        } else if (index % 4 === 1) { // Check for each genre\r",
+							"            pm.expect(book).to.include(\"td>\"); // Check for the presence of the genre\r",
+							"        } else if (index % 4 === 2) { // Check for each year\r",
+							"            pm.expect(book).to.include(\"td>\"); // Check for the presence of the year\r",
+							"        } else if (index % 4 === 3) { // Check for each language\r",
+							"            pm.expect(book).to.include(\"td>\"); // Check for the presence of the language\r",
+							"        }\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/full_info_author/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"full_info_author",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Author-delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('title');\r",
+							"    pm.expect(responseData).to.include('author-list');\r",
+							"    pm.expect(responseData).to.include('author-item');\r",
+							"    pm.expect(responseData).to.include('author-details');\r",
+							"    pm.expect(responseData).to.include('author-actions');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Author name and lastname should be non-empty strings\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include('<p class=\"author-name\">').and.to.include('<p class=\"author-lastname\">');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Action-link URLs are in the expected format\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('/delete-author/1');\r",
+							"    pm.expect(responseData).to.include('/edit-author/1');\r",
+							"    pm.expect(responseData).to.include('/author-info/1');\r",
+							"    pm.expect(responseData).to.include('/full_info_author/1');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/delete-author/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"delete-author",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book-delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response contains required HTML elements and classes\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('<!DOCTYPE html>');\r",
+							"    pm.expect(responseData).to.include('<html lang=\"uk\">');\r",
+							"    pm.expect(responseData).to.include('<head>');\r",
+							"    pm.expect(responseData).to.include('<title>Books List</title>');\r",
+							"    pm.expect(responseData).to.include('<link rel=\"stylesheet\" href=\"/css/books.css\">');\r",
+							"    pm.expect(responseData).to.include('<h1>Books</h1>');\r",
+							"    pm.expect(responseData).to.include('<div class=\"book-list\">');\r",
+							"    pm.expect(responseData).to.include('<div class=\"book-item\">');\r",
+							"    pm.expect(responseData).to.include('<div class=\"book-details\">');\r",
+							"    pm.expect(responseData).to.include('<p class=\"book-title\">Twenty Thousand Leagues Under the Sea</p>');\r",
+							"    pm.expect(responseData).to.include('<p class=\"book-author\">Verne</p>');\r",
+							"    pm.expect(responseData).to.include('<div class=\"book-actions\">');\r",
+							"    pm.expect(responseData).to.include('<a class=\"action-link\" href=\"/edit-book/1\">Edit</a>');\r",
+							"    pm.expect(responseData).to.include('<a class=\"action-link\" href=\"/delete-book/1\">Delete</a>');\r",
+							"    pm.expect(responseData).to.include('<a class=\"action-link\" href=\"/book-info/1\">Information</a>');\r",
+							"    pm.expect(responseData).to.include('<a class=\"action-link\" href=\"/full_info_book/1\">Full information</a>');\r",
+							"    pm.expect(responseData).to.include('</div>');\r",
+							"    pm.expect(responseData).to.include('</div>');\r",
+							"    pm.expect(responseData).to.include('</div>');\r",
+							"    pm.expect(responseData).to.include('<footer>');\r",
+							"    pm.expect(responseData).to.include('<nav class=\"links\">');\r",
+							"    pm.expect(responseData).to.include('<a href=\"/add-book\" class=\"link\">Add Book</a>');\r",
+							"    pm.expect(responseData).to.include('<a href=\"/authors\" class=\"link\">Authors</a>');\r",
+							"    pm.expect(responseData).to.include('<a href=\"../\" class=\"link\">Home</a>');\r",
+							"    pm.expect(responseData).to.include('</nav>');\r",
+							"    pm.expect(responseData).to.include('</footer>');\r",
+							"    pm.expect(responseData).to.include('</html>');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the correct Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the number of book items\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('class=\"book-item\"', \"Books List should contain book items\");\r",
+							"    pm.expect(responseData).to.include('class=\"book-title\"', \"Each book item should contain a title\");\r",
+							"    pm.expect(responseData).to.include('class=\"book-author\"', \"Each book item should contain an author\");\r",
+							"    pm.expect(responseData).to.include('class=\"book-actions\"', \"Each book item should contain action links\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/delete-book/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"delete-book",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit-author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.include(\"name\");\r",
+							"    pm.expect(responseData).to.include(\"last_name\");\r",
+							"    pm.expect(responseData).to.include(\"date_of_birth\");\r",
+							"    pm.expect(responseData).to.include(\"nationality\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Form action is present and correct\", function () {\r",
+							"    const formAction = pm.response.text().match(/<form action=\"([^\"]+)\"/);\r",
+							"    \r",
+							"    pm.expect(formAction).to.not.be.null;\r",
+							"    pm.expect(formAction[1]).to.equal(\"/edit-author/4\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Cancel link redirects to the correct URL\", function () {\r",
+							"    const cancelLink = pm.response.text().match(/<a id=\"cancel-btn\" href=\"(.+?)\" class=\"cancel-link\">Cancel<\\/a>/);\r",
+							"    pm.expect(cancelLink[1]).to.equal('/authors');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains the 'Save Changes' button\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.include('Save Changes');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains the 'Back to Authors List' link\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.include('Back to Authors List');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains the 'Books' link\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.include('Books');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/edit-author/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"edit-author",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit-book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"pm.test(\"Response body contains the title 'Edit Book'\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('<h1>Edit Book</h1>');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains the form action for editing book\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('action=\"/edit-book/8\"').and.to.include('method=\"post\"');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response header has Content-Type of 'text/html'\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has required HTML elements\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('<input type=\"text\" id=\"title\"');\r",
+							"    pm.expect(responseData).to.include('<input type=\"text\" id=\"genre\"');\r",
+							"    pm.expect(responseData).to.include('<input type=\"text\" id=\"language\"');\r",
+							"    pm.expect(responseData).to.include('<select id=\"author_id\"');\r",
+							"    pm.expect(responseData).to.include('<input type=\"number\" id=\"year\"');\r",
+							"    pm.expect(responseData).to.include('<div class=\"button-group\">');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response contains expected links in the footer\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"\r",
+							"    pm.expect(responseData).to.include('href=\"/books\"').and.to.include('href=\"/authors\"').and.to.include('href=\"../main\"');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/edit-book/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"edit-book",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

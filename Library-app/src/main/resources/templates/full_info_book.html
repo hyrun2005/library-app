@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book and Author Information</title>
+    <link rel="stylesheet" th:href="@{/css/full_info_book.css}">
+</head>
+<body>
+
+<h1>Book and Author Information</h1>
+
+<!-- Book Details Section -->
+<div class="book-info">
+    <h2>Book Details</h2>
+    <div class="book-details">
+        <div>
+            <strong>Title:</strong> <span th:text="${book.title}"></span>
+        </div>
+        <div>
+            <strong>Genre:</strong> <span th:text="${book.genre}"></span>
+        </div>
+        <div>
+            <strong>Year:</strong> <span th:text="${book.year}"></span>
+        </div>
+        <div>
+            <strong>Languages:</strong> <span th:text="${book.language}"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Author Details Section -->
+<div class="author-info">
+    <h2>Author Information</h2>
+    <div class="author-details">
+        <div>
+            <strong>Name:</strong> <span th:text="${author.name}"></span>
+        </div>
+        <div>
+            <strong>LastName:</strong> <span th:text="${author.lastname}"></span>
+        </div>
+        <div>
+            <strong>Date of Birth:</strong> <span th:text="${author.dateOfBirth}"></span>
+        </div>
+        <div>
+            <strong>Nationality:</strong> <span th:text="${author.nationality}"></span>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<footer>
+    <nav class="links">
+        <a href="/authors" class="link">Back to Authors List</a>
+        <a href="/books" class="link">Back to Books List</a>
+    </nav>
+</footer>
+</html>

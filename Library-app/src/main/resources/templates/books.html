@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books List</title>
+    <link rel="stylesheet" th:href="@{/css/books.css}">
+</head>
+<body>
+<h1>Books</h1>
+<div class="book-list">
+    <div class="book-item" th:each="book : ${books}">
+        <div class="book-details">
+            <p class="book-title" th:text="${book.title}">Book Title</p>
+            <p class="book-author" th:text="${book.author.lastname}">Author</p>
+        </div>
+        <div class="book-actions">
+            <a class="action-link" th:href="@{/edit-book/{id}(id=${book.id})}">Edit</a>
+            <a class="action-link" th:href="@{/delete-book/{id}(id=${book.id})}">Delete</a>
+            <a class="action-link" th:href="@{/book-info/{id}(id=${book.id})}">Information</a>
+            <a class="action-link" th:href="@{/full_info_book/{id}(id=${book.id})}">Full information</a>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer>
+    <nav class="links">
+        <a href="/add-book" class="link">Add Book</a>
+        <a href="/authors" class="link">Authors</a>
+        <a href="../" class="link">Home</a>
+    </nav>
+</footer>
+</html>

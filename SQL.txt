@@ -1,0 +1,39 @@
+#DROP DATABASE library;(gdy jest dublikat)
+CREATE DATABASE library;
+CREATE TABLE library.author(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name varchar(70) NOT NULL,
+lastname varchar(70) NOT NULL,    
+date_of_birth date NOT NULL,
+nationality varchar(70) DEFAULT NULL,
+author_id bigint(20) DEFAULT NULL
+);
+
+INSERT INTO library.author(id, name, lastname, date_of_birth, nationality)
+VALUES
+(1, 'William', 'Shakespeare','1564-04-01', 'Englishman'),
+(2, 'Charles ', 'Dickens ','1812-02-07', 'Englishman'),
+(3, 'Dante', 'Alighieri','1265-07-01', 'Italian'),
+(4, 'Jules', 'Verne','1828-02-08', 'Frenchman');
+
+CREATE TABLE library.book(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+title varchar(70) NOT NULL,
+genre varchar(70) NOT NULL,
+language varchar(70) NOT NULL, 
+author_id INT NOT NULL,
+year INT NOT NULL,
+CONSTRAINT author_id
+FOREIGN KEY (author_id) REFERENCES library.author (id)
+);
+
+INSERT INTO library.book(id, title, genre, language, author_id, year)
+VALUES
+(1, 'Twenty Thousand Leagues Under the Sea', 'science fiction adventure novel','French',4,1870),
+(2, 'A Journey to the Center of the Earth', 'science fiction','French',4,1864),
+(3, 'King Lear', 'tragedy','English',1,1608),
+(4, 'Hamlet', 'tragedy','English',1,1601),
+(5, 'Oliver Twist', 'serial novel','English',2,1838),
+(6, 'David Copperfield', 'novel ','English',2,1850),
+(7, 'The Divine Comedy', 'narrative poem','Italian ',3,1321),
+(8, 'From the Earth to the Moon', 'Science fiction','French ',4,1865);

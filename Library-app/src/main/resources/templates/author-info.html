@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Information</title>
+    <link rel="stylesheet" th:href="@{/css/author-info.css}">
+</head>
+<body>
+
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+
+<div class="author-info" th:if="${author}">
+    <h2>Author Details</h2>
+    <p>First Name: <span th:text="${author.name}"></span></p>
+    <p>Last Name: <span th:text="${author.lastname}"></span></p>
+    <p>Date of Birth: <span th:text="${author.dateOfBirth}"></span></p>
+    <p>Nationality: <span th:text="${author.nationality}"></span></p>
+</div>
+
+<footer>
+    <nav class="links">
+        <a href="/authors" class="link">Back to Authors List</a>
+        <a href="/books" class="link">Back to Books List</a>
+    </nav>
+</footer>
+
+</body>
+</html>

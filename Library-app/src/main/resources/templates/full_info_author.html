@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books with Author Data</title>
+    <link rel="stylesheet" th:href="@{/css/full_info_author.css}">
+</head>
+<body>
+
+<h1>Books and Author Information</h1>
+
+<div class="author-info">
+    <h2>Author Details</h2>
+    <div class="author-details">
+        <div>
+        <strong>Name:</strong> <span th:text="${author.name}"></span>
+        </div>
+        <div>
+            <strong>LastName:</strong> <span th:text="${author.lastname}"></span>
+        </div>
+        <div>
+            <strong>Date of Birth:</strong> <span th:text="${author.dateOfBirth}"></span>
+        </div>
+        <div>
+            <strong>Nationality:</strong> <span th:text="${author.nationality}"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Books Table -->
+<div class="books-table">
+    <h3>Books Written by the Author</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Book Title</th>
+            <th>Genre</th>
+            <th>Year</th>
+            <th>Languages</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.year}"></td>
+            <td th:text="${book.language}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+<footer>
+    <nav class="links">
+        <a href="/authors" class="link">Back to Authors List</a>
+        <a href="/books" class="link">Back to Books List</a>
+    </nav>
+</footer>
+</html>

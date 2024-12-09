@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Author</title>
+    <link rel="stylesheet" th:href="@{/css/edit-author.css}">
+</head>
+<body>
+<h1>Edit Author</h1>
+<div class="form-container">
+    <form th:action="@{/edit-author/{id}(id=${author.id})}" th:object="${author}" method="post">
+        <div class="form-group">
+            <label for="name">First Name:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" th:field="*{lastname}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="date_of_birth">Date of Birth:</label>
+            <input type="date" id="date_of_birth" th:field="*{dateOfBirth}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="nationality">Nationality:</label>
+            <input type="text" id="nationality" th:field="*{nationality}" required />
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="submit-btn">Save Changes</button>
+            <a id="cancel-btn" href="/authors" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+<footer>
+    <nav class="links">
+        <a href="/authors" class="link">Back to Authors List</a>
+        <a href="/books" class="link">Books</a>
+        <a href="../main" class="link">Home</a>
+    </nav>
+</footer>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors List</title>
+    <link rel="stylesheet" th:href="@{/css/authors.css}">
+</head>
+<body>
+<h1>Authors</h1>
+<div class="author-list">
+    <div class="author-item" th:each="author : ${authors}">
+        <div class="author-details">
+            <p class="author-name" th:text="${author.name}">Author Name</p>
+            <p class="author-lastname" th:text="${author.lastname}">Author LastName</p>
+        </div>
+        <div class="author-actions">
+            <a class="action-link" th:href="@{/delete-author/{id}(id=${author.id})}">Delete</a>
+            <a class="action-link" th:href="@{/edit-author/{id}(id=${author.id})}">Edit</a>
+            <a class="action-link" th:href="@{/author-info/{id}(id=${author.id})}">Author information</a>
+            <a class="action-link" th:href="@{/full_info_author/{id}(id=${author.id})}">Written books</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <nav class="links">
+        <a href="/add-author" class="link">Add New Author</a>
+        <a href="/books" class="link">Books list</a>
+        <a href="../" class="link">Home</a>
+    </nav>
+</footer>
+</body>
+</html>
